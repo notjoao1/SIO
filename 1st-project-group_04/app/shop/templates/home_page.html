@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if products %}
+    {% if not search %}
+        <div class="d-flex justify-content-end align-items-center">
+            Order by&nbsp;&nbsp;
+            <div class="dropdown" style="width: 190px" id = "filter1">
+              <button style="width: 100%" class="btn btn-primary dropdown-toggle" type="button" id="filterMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ order_by }}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="?order_by=Date, newest" onclick="toggleOption(this)">Date, newest</a>
+                <a class="dropdown-item" href="?order_by=Date, oldest" onclick="toggleOption(this)">Date, oldest</a>
+                <a class="dropdown-item" href="?order_by=Alphabetically, A-Z" onclick="toggleOption(this)">Alphabetically, A-Z</a>
+                <a class="dropdown-item" href="?order_by=Alphabetically, Z-A" onclick="toggleOption(this)">Alphabetically, Z-A</a>
+                <a class="dropdown-item" href="?order_by=Price, cheaper" onclick="toggleOption(this)">Price, cheaper</a>
+                <a class="dropdown-item" href="?order_by=Price, costlier" onclick="toggleOption(this)">Price, costlier</a>
+              </div>
+            </div>
+        </div>
+        {% for product in products.object_list %}
+            <div class="card me-2 mb-2 mt-2" style="width: 16rem;">
+                <img style="object-fit: cover;" class="card-img mt-2" width="268" height="200" src="{{ product.image.url }}">
+                <div class="mt-3 text-center">
+                  <h5 class="card-title">{{ product.title }}</h5>
+                  <p class="text-muted">${{ product.price }}</p>
+                  <a href="{{ product.get_absolute_url }}" class="mb-3 btn btn-outline-primary w-100">Buy Now</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        {% if search %}
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-8 mt-2 text-center">
+                <br>
+                <h3 class="text-muted text-capitalize">These Products were found for {{ search|safe }}!</h3>
+              </div>
+              <div class="col-md-2"></div>
+            </div>
+        {% endif %}
+        {% for product in products %}
+            <div class="card me-2 mb-2 mt-2" style="width: 16rem;">
+                <img style="object-fit: cover;" class="card-img mt-2" width="268" height="200" src="{{ product.image.url }}">
+                <div class="mt-3 text-center">
+                  <h5 class="card-title">{{ product.title }}</h5>
+                  <p class="text-muted">${{ product.price }}</p>
+                  <a href="{{ product.get_absolute_url }}" class="mb-3 btn btn-outline-primary w-100">Buy Now</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- pagination -->
+    {% if not search %}
+        <center class="mt-5">
+              <div class="col-md-2">
+                <ul class="pagination">
+                  {% if products.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?order_by={{ order_by }}&page={{ products.previous_page_number }}">Previous</a></li>
+                  <li class="page-item"><a class="page-link" href="?order_by={{ order_by }}&page={{ products.previous_page_number }}">{{products.previous_page_number}}</a></li>
+                  {% endif %}
+                  <li class="page-item"><a class="page-link" href="?order_by={{ order_by }}&page={{ products.number }}">{{products.number}}</a></li>
+                  {% if products.has_next %}
+                  <li class="page-item"><a class="page-link" href="?order_by={{ order_by }}&page={{ products.next_page_number }}">{{products.next_page_number}}</a></li>
+                  <li class="page-item"><a class="page-link" href="?order_by={{ order_by }}&page={{ products.next_page_number }}">Next</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+        </center>
+    {% endif %}
+{% else %}
+    {% if search %}
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8 mt-5 pt-5 text-center">
+            <br>
+            <h3 class="text-muted text-capitalize">No Products were found for {{ search|safe }}!</h3>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="col-md-6">
+        <form method="POST">
+            {% csrf_token %}
+            <h3>Edit Profile</h3>
+            <hr>
+            {{ form|crispy  }}
+            <div class="form-group">
+                <button class="btn btn-primary mt-3 w-100" type="submit">Update</button>
+            </div>
+        </form>
+        <div>
+            <a class="btn btn-primary mt-3 w-100" href="{% url 'accounts:change_password' %}" >Change password</a>
+        </div>
+        <div>
+            <a class="btn btn-danger mt-3 w-100" href="{% url 'accounts:delete_account' %}" >Delete account</a>
+        </div>
+    </div>
+{% endblock %}

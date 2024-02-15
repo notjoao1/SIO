@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        {% if cart_count != 0 %}
+        <div class="border rounded p-3">
+            <form method="post" action="{% url 'cart:update_cart' %}">
+                {% csrf_token %}
+                <table class="table table-striped">
+                    <thead class="text-muted">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    {% for item in cart %}
+                    <tbody>
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td><a class="text-decoration-none" href="{{ item.product.get_absolute_url }}">{{ item.product.title }}</a></td>
+                            <td>${{ item.price }}</td>
+                            <td>
+                                <input type="number" name="quantity_{{ item.product.id }}" value="{{ item.quantity }}" min="1" style="width: 60px;">
+                            </td>
+                            <td>${{ item.total_price }}</td>
+                            <td><a class="text-danger text-decoration-none" href="{% url 'cart:remove_from_cart' item.product.id %}">Remove</a></td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+                <hr>
+                <div class="text-right">
+                    <a href="{% url 'orders:create_order' %}" class="btn btn-success">Checkout</a>
+                    <button type="submit" class="btn btn-primary ml-2">Update Cart</button>
+                </div>
+                <h4 class="mt-4 text-muted">Total: ${{ cart.get_total_price }}</h4>
+            </form>
+        </div>
+        {% else %}
+        <div class="mt-5 pt-5 text-center">
+            <h3 class="text-muted text-capitalize">Your Cart is Empty</h3>
+            <a href="/" class="text-primary text-decoration-none">Continue Shopping</a>
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,9 @@
+	DETI MERCH SHOP - ORDER 6
+Ordered by - dfsghjhkgjuliçop (idk@gmail.com)
+
+Products:
+Product name              Price x Quantity     Total Price 
+
+Emblema LEI               2 x 6                          12
+
+Date: 2024-01-01 19:55:29.827485+00:00

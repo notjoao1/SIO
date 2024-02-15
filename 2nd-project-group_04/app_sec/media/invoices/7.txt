@@ -1,0 +1,9 @@
+	DETI MERCH SHOP - ORDER 7
+Ordered by - dfsghjhkgjuliçop (idk@gmail.com)
+
+Products:
+Product name              Price x Quantity     Total Price 
+
+Sweatshirt Eng. Informática com Capuz 18 x 6                        108
+
+Date: 2024-01-01 19:56:05.006600+00:00
